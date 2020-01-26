@@ -1,4 +1,4 @@
-module github.com/SCKelemen/modules/exclaim
+module github.com/SCKelemen/lang/exclaim
 
 go 1.13
 

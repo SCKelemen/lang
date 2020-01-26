@@ -1,3 +1,3 @@
-module github.com/SCKelemen/modules/scream
+module github.com/SCKelemen/lang/scream
 
 go 1.13

@@ -1,3 +1,3 @@
-module github.com/SCKelemen/modules/yell
+module github.com/SCKelemen/lang/yell
 
 go 1.13
