@@ -1,6 +1,7 @@
 package scanner
 
 import (
+	"fmt"
 	"util"
 
 	"token"
@@ -34,25 +35,87 @@ func (s *Scanner) readChar() {
 func (s *Scanner) NextToken() token.Token {
 	var tok token.Token
 	s.consumeWhitespace()
-
+	position := s.head
+	next := s.peekChar()
 	switch s.current {
 	// handle brackety things
+
+	case '!':
+		if next == '=' {
+			s.readChar() // eat the next '='
+			tok = token.Token{TokenKind: token.NEQL, Literal: string(s.input[position:s.head])}
+		} else {
+			tok = newToken(token.BANG, s.current)
+		}
+	case '&':
+		tok = newToken(token.AMP, s.current)
+	case '(':
+		tok = newToken(token.LPAREN, s.current)
+	case ')':
+		tok = newToken(token.RPAREN, s.current)
+	case '*':
+		tok = newToken(token.MUL, s.current)
+	case '+':
+		tok = newToken(token.SUM, s.current)
+	case ',':
+		tok = newToken(token.COMMA, s.current)
+	case '-':
+		tok = newToken(token.NEG, s.current)
+	case '.':
+		// DOT: .
+		// RANGE: ..
+		// SPREAD: ...
+		if next == '.' {
+			// spread or range
+			// we'll say it's range for now
+			s.readChar() // eat the next '.'
+			tok = token.Token{TokenKind: token.RANGE, Literal: string(s.input[position:s.read])}
+		} else {
+			tok = newToken(token.NEG, s.current)
+		}
+	case '/':
+		tok = newToken(token.QUO, s.current)
+	case ':':
+		tok = newToken(token.COLON, s.current)
+	case ';':
+		tok = newToken(token.SEMI, s.current)
+	case '<':
+		// RPIPE: <|
+		// LCHEV: <
+		if next == '|' {
+			s.readChar() // eat the next '|'
+			tok = token.Token{TokenKind: token.RPIPE, Literal: string(s.input[position:s.head])}
+		} else {
+			tok = newToken(token.LCHEV, s.current)
+		}
+	case '=':
+		// ASSIGN: =
+		// EQL: ==
+		if next == '=' {
+			s.readChar() // eat the next '='
+			tok = token.Token{TokenKind: token.EQL, Literal: string(s.input[position:s.head])}
+		} else {
+			tok = newToken(token.ASSIGN, s.current)
+		}
+	case '>':
+		tok = newToken(token.RCHEV, s.current)
 	case '[':
 		tok = newToken(token.LBRACK, s.current)
 	case ']':
 		tok = newToken(token.RBRACK, s.current)
 	case '{':
 		tok = newToken(token.LBRACE, s.current)
+	case '|':
+		// PIPE: |
+		// FPIPE: |>
+		if next == '>' {
+			s.readChar() // eat the next '>'
+			tok = token.Token{TokenKind: token.FPIPE, Literal: string(s.input[position:s.head])}
+		} else {
+			tok = newToken(token.PIPE, s.current)
+		}
 	case '}':
 		tok = newToken(token.RBRACE, s.current)
-	case '(':
-		tok = newToken(token.LPAREN, s.current)
-	case ')':
-		tok = newToken(token.RPAREN, s.current)
-	case '<':
-		tok = newToken(token.LCHEV, s.current)
-	case '>':
-		tok = newToken(token.RCHEV, s.current)
 	case 0:
 		tok.Literal = ""
 		tok.TokenKind = token.EOF
@@ -112,4 +175,8 @@ func (s *Scanner) Source() string {
 
 func newToken(kind token.TokenKind, ch rune) token.Token {
 	return token.Token{TokenKind: kind, Literal: string(ch)}
+}
+
+func (s *Scanner) InspectPosition() string {
+	return fmt.Sprintf("position: read: %v  head: %v  ch: %s", s.read, s.head, string(s.current))
 }
