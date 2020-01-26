@@ -71,7 +71,7 @@ func (s *Scanner) NextToken() token.Token {
 			s.readChar() // eat the next '.'
 			tok = token.Token{TokenKind: token.RANGE, Literal: string(s.input[position:s.read])}
 		} else {
-			tok = newToken(token.NEG, s.current)
+			tok = newToken(token.DOT, s.current)
 		}
 	case '/':
 		tok = newToken(token.QUO, s.current)
@@ -84,7 +84,7 @@ func (s *Scanner) NextToken() token.Token {
 		// LCHEV: <
 		if next == '|' {
 			s.readChar() // eat the next '|'
-			tok = token.Token{TokenKind: token.RPIPE, Literal: string(s.input[position:s.head])}
+			tok = token.Token{TokenKind: token.RPIPE, Literal: string(s.input[position:s.read])}
 		} else {
 			tok = newToken(token.LCHEV, s.current)
 		}
@@ -93,7 +93,7 @@ func (s *Scanner) NextToken() token.Token {
 		// EQL: ==
 		if next == '=' {
 			s.readChar() // eat the next '='
-			tok = token.Token{TokenKind: token.EQL, Literal: string(s.input[position:s.head])}
+			tok = token.Token{TokenKind: token.EQL, Literal: string(s.input[position:s.read])}
 		} else {
 			tok = newToken(token.ASSIGN, s.current)
 		}
@@ -110,7 +110,7 @@ func (s *Scanner) NextToken() token.Token {
 		// FPIPE: |>
 		if next == '>' {
 			s.readChar() // eat the next '>'
-			tok = token.Token{TokenKind: token.FPIPE, Literal: string(s.input[position:s.head])}
+			tok = token.Token{TokenKind: token.FPIPE, Literal: string(s.input[position:s.read])}
 		} else {
 			tok = newToken(token.PIPE, s.current)
 		}

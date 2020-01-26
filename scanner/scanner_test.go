@@ -85,7 +85,7 @@ func TestNextToken(t *testing.T) {
 	}
 }
 
-func TestMoreNextToken(t *testing.T) {
+func TestSingleChars(t *testing.T) {
 	input := `
 	!	
 	&
@@ -103,7 +103,7 @@ func TestMoreNextToken(t *testing.T) {
 
 	]
 	{
-		
+
 	}
 	`
 	tests := []struct {
@@ -135,6 +135,117 @@ func TestMoreNextToken(t *testing.T) {
 		//{token.PIPE, "|"},
 		//{token.FPIPE, "|>"},
 		{token.RBRACE, "}"},
+		{token.EOF, ""},
+	}
+
+	scnr := New(input)
+	for i, tt := range tests {
+		tok := scnr.NextToken()
+		if tok.TokenKind != tt.expectedKind {
+			t.Fatalf("tests[%d] - tokenKind wrong. expected=%q, got=%q\t at %s",
+				i, tt.expectedKind, tok.TokenKind, scnr.InspectPosition())
+		}
+
+		if tok.Literal != tt.expectedLiteral {
+			t.Fatalf("tests[%d] - literal wrong. expected=%q, got=%q\t at %s",
+				i, tt.expectedLiteral, tok.Literal, scnr.InspectPosition())
+		}
+	}
+}
+
+func TestMultiChars(t *testing.T) {
+	input := `
+	.
+..
+
+<|
+<
+==
+=
+
+|
+|>
+
+	`
+	tests := []struct {
+		expectedKind    token.TokenKind
+		expectedLiteral string
+	}{
+		{token.DOT, "."},
+		{token.RANGE, ".."},
+		{token.RPIPE, "<|"},
+		{token.LCHEV, "<"},
+		{token.EQL, "=="},
+		{token.ASSIGN, "="},
+		{token.PIPE, "|"},
+		{token.FPIPE, "|>"},
+		{token.EOF, ""},
+	}
+
+	scnr := New(input)
+	for i, tt := range tests {
+		tok := scnr.NextToken()
+		if tok.TokenKind != tt.expectedKind {
+			t.Fatalf("tests[%d] - tokenKind wrong. expected=%q, got=%q\t at %s",
+				i, tt.expectedKind, tok.TokenKind, scnr.InspectPosition())
+		}
+
+		if tok.Literal != tt.expectedLiteral {
+			t.Fatalf("tests[%d] - literal wrong. expected=%q, got=%q\t at %s",
+				i, tt.expectedLiteral, tok.Literal, scnr.InspectPosition())
+		}
+	}
+}
+
+func TestMultiCharAffinity(t *testing.T) {
+	input := `
+...........
+|>>>>|>||>
+=====
+<<<|<|||
+=====
+<<|||>><>|<>|>
+	`
+	tests := []struct {
+		expectedKind    token.TokenKind
+		expectedLiteral string
+	}{
+		{token.RANGE, ".."},
+		{token.RANGE, ".."},
+		{token.RANGE, ".."},
+		{token.RANGE, ".."},
+		{token.RANGE, ".."},
+		{token.DOT, "."},
+		{token.FPIPE, "|>"},
+		{token.RCHEV, ">"},
+		{token.RCHEV, ">"},
+		{token.RCHEV, ">"},
+		{token.FPIPE, "|>"},
+		{token.PIPE, "|"},
+		{token.FPIPE, "|>"},
+		{token.EQL, "=="},
+		{token.EQL, "=="},
+		{token.ASSIGN, "="},
+		{token.LCHEV, "<"},
+		{token.LCHEV, "<"},
+		{token.RPIPE, "<|"},
+		{token.RPIPE, "<|"},
+		{token.PIPE, "|"},
+		{token.PIPE, "|"},
+		{token.EQL, "=="},
+		{token.EQL, "=="},
+		{token.ASSIGN, "="},
+		{token.LCHEV, "<"},
+		{token.RPIPE, "<|"},
+		{token.PIPE, "|"},
+		{token.FPIPE, "|>"},
+		{token.RCHEV, ">"},
+		{token.LCHEV, "<"},
+		{token.RCHEV, ">"},
+		{token.PIPE, "|"},
+		{token.LCHEV, "<"},
+		{token.RCHEV, ">"},
+		{token.FPIPE, "|>"},
 		{token.EOF, ""},
 	}
 
