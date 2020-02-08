@@ -27,18 +27,18 @@ jobs:
     - name: Build
       run: go build -v .
     
-    - name: Tests
-      run: |
-        cd ./ast && go test
-        cd ..
-        cd ./exclaim && go test
-        cd ..
-        cd ./scanner && go test
-        cd ..
-        cd ./scream && go test
-        cd ..
-        cd ./token && go test
-        cd ..
-        cd ./util && go test
-        cd ..
-        cd ./yell && go test
+    - name: Tests Ast
+      run: cd ./ast && go test
+    - name: Tests Exclaim
+      run: cd ./exclaim && go test
+    - name: Tests Scanner
+      run: cd ./scanner && go test
+    - name: Tests Scream
+      run: cd ./scream && go test
+    - name: Tests Token
+      run: cd ./token && go test
+    - name: Tests Util
+      run: cd ./util && go test
+    - name: Tests Yell
+      run: cd ./yell && go test
+ 
