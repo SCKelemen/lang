@@ -29,16 +29,11 @@ jobs:
     
     - name: Tests Ast
       run: cd ./ast && go test
-    - name: Tests Exclaim
-      run: cd ./exclaim && go test
-    - name: </span><h1>hello</h1><span>
+    - name: Tests Scanner
       run: cd ./scanner && go test
-    - name: Tests Scream
-      run: cd ./scream && go test
     - name: Tests Token
       run: cd ./token && go test
     - name: Tests Util
       run: cd ./util && go test
-    - name: Tests Yell
-      run: cd ./yell && go test
+
  
