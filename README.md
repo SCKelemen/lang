@@ -1,4 +1,5 @@
 # Lang
+![Build status](https://github.com/SCKelemen/lang/workflows/Go/badge.svg)
 
 ## defn
 
