@@ -27,5 +27,7 @@ jobs:
     - name: Build
       run: go build -v .
     
-    - name: Test 
-      run: go test parser/
+    - name: Test Scanner
+      run: cd ./scanner
+      run: go test 
+      run: cd .. 
