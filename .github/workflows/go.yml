@@ -33,6 +33,8 @@ jobs:
       run: cd ./scanner && go test
     - name: Tests Token
       run: cd ./token && go test
+    - name: Tests Types
+      run: cd ./types && go test
     - name: Tests Util
       run: cd ./util && go test
 
