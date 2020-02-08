@@ -17,3 +17,22 @@ type Parser struct {
 
 	errors []string
 }
+
+func New(lxr *scanner.Scanner) *Parser {
+
+	p := &Parser{
+		lxr:    lxr,
+		errors: []string{},
+	}
+
+	// p.succ
+	p.nextToken()
+	p.nextToken()
+
+	return p
+}
+
+func (p *Parser) nextToken() {
+	p.currentToken = p.peekToken
+	p.peekToken = p.lxr.NextToken()
+}
