@@ -27,8 +27,5 @@ jobs:
     - name: Build
       run: go build -v .
     
-    - name: Test Scanner
-      run: |
-        cd ./scanner
-        go test 
-        cd .. 
+    - name: Test Recursviely?
+      run: go test ./... 
