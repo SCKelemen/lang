@@ -29,10 +29,16 @@ jobs:
     
     - name: Tests
       run: |
-        cd ./ast && go test && cd ..
-        cd ./exclaim && go test && cd ..
-        cd ./scanner && go test && cd ..
-        cd ./scream && go test && cd ..
-        cd ./token && go test && cd ..
-        cd ./util && go test && cd ..
-        cd ./yell && go test && cd ..
+        cd ./ast && go test
+        cd ..
+        cd ./exclaim && go test
+        cd ..
+        cd ./scanner && go test
+        cd ..
+        cd ./scream && go test
+        cd ..
+        cd ./token && go test
+        cd ..
+        cd ./util && go test
+        cd ..
+        cd ./yell && go test
