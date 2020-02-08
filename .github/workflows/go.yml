@@ -29,6 +29,8 @@ jobs:
     
     - name: Tests Ast
       run: cd ./ast && go test
+    - name: Tests Parser
+      run: cd ./parser && go test
     - name: Tests Scanner
       run: cd ./scanner && go test
     - name: Tests Token
