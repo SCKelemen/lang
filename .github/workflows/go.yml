@@ -31,7 +31,7 @@ jobs:
       run: cd ./ast && go test
     - name: Tests Exclaim
       run: cd ./exclaim && go test
-    - name: Tests Scanner
+    - name: Tests Scanner2
       run: cd ./scanner && go test
     - name: Tests Scream
       run: cd ./scream && go test
