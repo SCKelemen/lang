@@ -42,3 +42,31 @@ number_first  = digit ; (* maybe also need - *)
 number_rest   = alpha | digit | "_" | "." ;
 number  = number_first, { number_rest } ;
 ```  
+
+
+## features 
+
+- Spread
+- Union
+- Intersection
+- Pipes
+- Composition
+- Pattern matching
+
+```ts 
+// union
+type bool 
+        =  true
+        |  false
+
+// intersection
+type id = int 
+type name = string 
+type nameAndId = id & name
+```
+
+
+```fs
+
+
+```
