@@ -30,10 +30,10 @@ func (p *Parser) parseTypeDeclaration() *ast.TypeDeclarationStatement {
 	}
 
 	stmt.Name = &ast.Identifier{Token: p.currentToken, Value: p.currentToken.Literal}
-	if !p.expectPeek(token.EQL) {
+	if !p.expectPeek(token.ASSIGN) {
 		// type declaration should be of the form:
 		// type ident = expr
-		// if `ident` is not followed by an `eql`
+		// if `ident` is not followed by an `assign`
 		// then shit is fucked, and we need to fail;
 		return nil
 	}
