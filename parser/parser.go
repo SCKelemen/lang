@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"ast"
 	"fmt"
 	"scanner"
 	"token"
@@ -79,3 +80,31 @@ const (
 	PREFIX
 	INVOCATION
 )
+
+func (p *Parser) parseTypeDeclaration() *ast.TypeDeclarationStatement {
+	stmt := &ast.TypeDeclarationStatement{Token: p.currentToken}
+
+	if !p.expectPeek(token.IDENT) {
+		// type declaration should be of the form:
+		// type ident = expr
+		// if `type` is not followed by an `ident`
+		// then shit is fucked, and we need to fail;
+		return nil
+	}
+
+	stmt.Name = &ast.Identifier{Token: p.currentToken, Value: p.currentToken.Literal}
+	if !p.expectPeek(token.EQL) {
+		// type declaration should be of the form:
+		// type ident = expr
+		// if `ident` is not followed by an `eql`
+		// then shit is fucked, and we need to fail;
+		return nil
+	}
+
+	for !p.isCurrentToken(token.SEMI) {
+		// the expression continues until the next semi
+		p.nextToken()
+	}
+
+	return stmt
+}
