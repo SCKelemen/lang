@@ -1,4 +1,6 @@
 github.com/SCKelemen/lang v0.0.0-20200209002051-64ce3d6f1926 h1:vE1jsALa4iXFpQujaQ6od/0mNwiPs28R4gQWrdpotLo=
 github.com/SCKelemen/lang/ast v0.0.0-20200209002051-64ce3d6f1926 h1:vB4fTDmeEy33NJDCRZ1iKGvuXsGS1gkA/dePJkrtHyM=
 github.com/SCKelemen/lang/ast v0.0.0-20200209002051-64ce3d6f1926/go.mod h1:MB88rt+4LMjNY8a2nPkk49K0dU1wZeW18d2sKfv9td0=
+github.com/SCKelemen/lang/token v0.0.0-20200126025415-66d2a05ec781 h1:yHnayCRRBon4cMHAL3Wd7PR0IEzy+WmpywJC5zVQr34=
 github.com/SCKelemen/lang/token v0.0.0-20200126025415-66d2a05ec781/go.mod h1:YauVKS4/DOB1ViAh0B2oCnkzqjENKMbjmfj2/B1n0E0=
+github.com/SCKelemen/lang/token v0.0.0-20200209012110-d0181be7a1f4/go.mod h1:YauVKS4/DOB1ViAh0B2oCnkzqjENKMbjmfj2/B1n0E0=

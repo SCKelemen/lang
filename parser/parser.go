@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"ast"
 	"fmt"
 	"scanner"
 	"token"
@@ -34,7 +35,21 @@ func New(lxr *scanner.Scanner) *Parser {
 	}
 
 	p.prefixParsers = make(map[token.TokenKind]prefixParseFn)
+	p.registerPrefix(token.IDENT, p.parseIdentifier)
+	p.registerPrefix(token.INT, p.parseIntegerLiteral)
+	p.registerPrefix(token.BANG, p.parsePrefixExpression)
+	p.registerPrefix(token.NEG, p.parsePrefixExpression)
+
 	p.infixParsers = make(map[token.TokenKind]infixParseFn)
+	p.registerInfix(token.SUM, p.parseInfixExpression)
+	p.registerInfix(token.NEG, p.parseInfixExpression)
+	p.registerInfix(token.MUL, p.parseInfixExpression)
+	p.registerInfix(token.QUO, p.parseInfixExpression)
+	p.registerInfix(token.EQL, p.parseInfixExpression)
+	p.registerInfix(token.NEQL, p.parseInfixExpression)
+	p.registerInfix(token.LCHEV, p.parseInfixExpression)
+	p.registerInfix(token.RCHEV, p.parseInfixExpression)
+	//p.registerInfix(token.LPAREN, p.parseInvocationExpression)
 
 	// p.succ
 	p.nextToken()
@@ -46,6 +61,21 @@ func New(lxr *scanner.Scanner) *Parser {
 func (p *Parser) nextToken() {
 	p.currentToken = p.peekToken
 	p.peekToken = p.lxr.NextToken()
+}
+
+func (p *Parser) ParseProgram() *ast.Program {
+	program := &ast.Program{}
+	program.Statements = []ast.Statement{}
+
+	for p.currentToken.TokenKind != token.EOF {
+		stmt := p.parseStatement()
+		if stmt != nil {
+			program.Statements = append(program.Statements, stmt)
+		}
+		p.nextToken()
+
+	}
+	return program
 }
 
 func (p *Parser) isCurrentToken(t token.TokenKind) bool {
