@@ -38,11 +38,13 @@ func (p *Parser) parseTypeDeclaration() *ast.TypeDeclarationStatement {
 		return nil
 	}
 
-	for !p.isCurrentToken(token.SEMI) {
+	if !p.isCurrentToken(token.SEMI) {
 		// the expression continues until the next semi
-		p.nextToken()
+		stmt.Value = p.parseInfixExpression(stmt.Name)
 	}
 
+	// consume semi
+	p.nextToken()
 	return stmt
 }
 

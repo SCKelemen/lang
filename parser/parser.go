@@ -39,7 +39,7 @@ func New(lxr *scanner.Scanner) *Parser {
 	p.registerPrefix(token.INT, p.parseIntegerLiteral)
 	p.registerPrefix(token.BANG, p.parsePrefixExpression)
 	p.registerPrefix(token.NEG, p.parsePrefixExpression)
-
+	p.registerPrefix(token.ASSIGN, p.parsePrefixExpression)
 	p.infixParsers = make(map[token.TokenKind]infixParseFn)
 	p.registerInfix(token.SUM, p.parseInfixExpression)
 	p.registerInfix(token.NEG, p.parseInfixExpression)
@@ -49,6 +49,7 @@ func New(lxr *scanner.Scanner) *Parser {
 	p.registerInfix(token.NEQL, p.parseInfixExpression)
 	p.registerInfix(token.LCHEV, p.parseInfixExpression)
 	p.registerInfix(token.RCHEV, p.parseInfixExpression)
+	p.registerInfix(token.ASSIGN, p.parseInfixExpression)
 	//p.registerInfix(token.LPAREN, p.parseInvocationExpression)
 
 	// p.succ
