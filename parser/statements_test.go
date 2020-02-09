@@ -72,15 +72,21 @@ func TestLetDeclarationStatement(t *testing.T) {
 		t.Fatalf("Program has an unexpected number of statements. Expected 1, received %d", len(program.Statements))
 	}
 
-	stmt, ok := program.Statements[0].(*ast.ReturnStatement)
+	stmt, ok := program.Statements[0].(*ast.LetDeclarationStatement)
 	if !ok {
-		t.Fatalf("program.Statements[0]  is not *ast.ReturnStatement. Received %T", program.Statements[0])
+		t.Fatalf("program.Statements[0]  is not *ast.LetDeclarationStatement. Received %T", program.Statements[0])
 	}
-	if stmt.TokenLiteral() != "return" {
-		t.Fatalf("Expected TokenLiteral of ReturnStatement to be `return`. Received %s", stmt.TokenLiteral())
+	if stmt.TokenLiteral() != "let" {
+		t.Fatalf("Expected TokenLiteral of LetDeclarationStatement to be `let`. Received %s", stmt.TokenLiteral())
 	}
-	if stmt.ReturnValue.TokenLiteral() != "15" {
-		t.Fatalf("Expected TokenLiteral of ReturnValue to be `15`. Received %s", stmt.ReturnValue.TokenLiteral())
+	if stmt.Name.Value != "five" {
+		t.Fatalf("Expected Value of Name to be `five`. Received %s", stmt.Name.Value)
+	}
+	if stmt.Name.TokenLiteral() != "five" {
+		t.Fatalf("Expected Value of Name to be `five`. Received %s", stmt.Name.TokenLiteral())
+	}
+	if stmt.Value.TokenLiteral() != "5" {
+		t.Fatalf("Expected TokenLiteral of ReturnValue to be `5`. Received %s", stmt.Value.TokenLiteral())
 	}
 
 }
